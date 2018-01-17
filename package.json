@@ -1,0 +1,36 @@
+{
+  "name": "react-clicker",
+  "version": "0.0.1",
+  "description": "Simple project that renders a clicker at the screen. For training purposes.",
+  "main": "index.html",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpaguiar/react-clicker.git"
+  },
+  "keywords": [
+    "react",
+    "javascript",
+    "webpack"
+  ],
+  "author": "Felipe Aguiar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fpaguiar/react-clicker/issues"
+  },
+  "homepage": "https://github.com/fpaguiar/react-clicker#readme",
+  "devDependencies": {
+    "eslint": "^4.15.0",
+    "eslint-plugin-react": "^7.5.1"
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.0"
+  }
+}
