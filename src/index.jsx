@@ -1,4 +1,5 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import Clicker from 'components/Clicker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Clicker />, document.getElementById('root'));
