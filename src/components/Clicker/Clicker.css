@@ -15,7 +15,12 @@
 .content {
   background: gray;
   flex: 8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
 }
+
 
 .menu {
   flex: 2;
