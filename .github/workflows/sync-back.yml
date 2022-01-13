@@ -1,0 +1,22 @@
+name: Sync Master back with Develop Branch
+on:
+  push:
+    branches:
+      - master
+jobs:
+  syncBack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+      - name: Reset promotion branch
+        run: |
+          git fetch origin main:main
+          git reset --hard main
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: sync-back-master
+          title: 'Syncinc Back From Master'
+          commit-message: 'Sync Back'
