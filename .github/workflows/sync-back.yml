@@ -7,12 +7,11 @@ jobs:
   syncBack:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: master
+      - name: Checkout branch
+        uses: actions/checkout@v2
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: sync-back-master
+          branch: develop
           title: 'Syncinc Back From Master'
-          commit-message: 'Sync Back'
+          commit-message: 'chore: Sync Back'
