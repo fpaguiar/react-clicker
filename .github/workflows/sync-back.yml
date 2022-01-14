@@ -2,16 +2,17 @@ name: Sync Master back with Develop Branch
 on:
   push:
     branches:
-      - master
+    - master
+
 jobs:
-  syncBack:
+  pull-request:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout branch
-        uses: actions/checkout@v2
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          branch: develop
-          title: 'Syncinc Back From Master'
-          commit-message: 'chore: Sync Back'
+    - name: Checkout Master
+      uses: actions/checkout@v2
+    - name: Create The Pull Request
+      uses: repo-sync/pull-request@v2
+      with:
+        destination_branch: "develop"
+        pr_title: "Syncing ${{ github.ref }} back to other environments"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
