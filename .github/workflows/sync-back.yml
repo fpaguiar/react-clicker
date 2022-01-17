@@ -2,7 +2,7 @@ name: Sync Master back with Develop Branch
 env:
     DEVELOP_BRANCH: develop
     STAGING_BRANCH: staging
-    PRODUCTION_BRANCH: production
+    PRODUCTION_BRANCH: master
 
 on:
   push:
