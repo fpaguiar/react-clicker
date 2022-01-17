@@ -4,10 +4,11 @@ on:
     branches:
     - master
 
-jobs:
-  env:
+env:
     DEVELOP_BRANCH: develop
     STAGING_BRANCH: staging
+
+jobs:
   sync-back-develop:
     runs-on: ubuntu-latest
     steps:
