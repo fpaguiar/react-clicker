@@ -7,8 +7,8 @@ on:
 jobs:
   pull-request:
     env:
-      DEVELOP_BRANCH: origin/develop
-      STAGING_BRANCH: origin/staging
+      DEVELOP_BRANCH: develop
+      STAGING_BRANCH: staging
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Production Branch
@@ -18,11 +18,7 @@ jobs:
     - name: Check Diff Between Branches
       id: check_diff
       run: |
-        echo ""::set-output name=diff::$(git diff --name-only ${{ github.ref }} $DEVELOP_BRANCH | wc -l)
-    - name: Print Environment Variables
-      run: |
-        echo "GITHUB_REF=$GITHUB_REF"
-        echo "GITHUB_REF_NAME=$GITHUB_REF_NAME"
+        echo "::set-output name=diff::$(git diff --name-only ${{ github.ref }} $DEVELOP_BRANCH | wc -l)"
     - name: Create The Pull Request
       if: ${{ steps.check_diff.outputs.diff > 0 }}
       uses: repo-sync/pull-request@v2
