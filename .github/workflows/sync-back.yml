@@ -39,6 +39,12 @@ jobs:
       id: check_diff
       run: |
         echo "::set-output name=diff::$(git diff --name-only ${{ github.ref }} origin/${{ env.STAGING_BRANCH }} | wc -l)"
+    - name: Print Stuff
+      run: |
+        echo $GITHUB_REF_NAME
+        echo ${{ env }}
+        echo ${{ GITHUB_ENV }}
+        echo ${{ env.GITHUB_ENV }}
     - name: Create The Pull Request
       if: ${{ steps.check_diff.outputs.diff > 0 }}
       uses: repo-sync/pull-request@v2
