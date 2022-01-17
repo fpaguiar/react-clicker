@@ -4,8 +4,12 @@ on:
     branches:
     - master
 
+env:
+    DEVELOP_BRANCH: develop
+    STAGING_BRANCH: staging
+
 jobs:
-  pull-request:
+  sync-back-develop:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Production Branch
@@ -15,12 +19,31 @@ jobs:
     - name: Check Diff Between Branches
       id: check_diff
       run: |
-        echo ""::set-output name=diff::$(git diff --name-only ${{ github.ref }} origin/develop | wc -l)
+        echo "::set-output name=diff::$(git diff --name-only ${{ github.ref }} origin/${{ env.DEVELOP_BRANCH }} | wc -l)"
     - name: Create The Pull Request
       if: ${{ steps.check_diff.outputs.diff > 0 }}
       uses: repo-sync/pull-request@v2
       with:
-        destination_branch: "develop"
+        destination_branch: ${{ env.DEVELOP_BRANCH }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        pr_body: "This Pull Request is automatically generated. Please check if there are any accidental code reverts before merging."
-        pr_title: "Syncing ${{ github.ref }} back to other environments"
+        pr_body: "⚠️ This Pull Request is automatically generated. Please check for any accidental code changes before merging."
+        pr_title: "Syncing '$GITHUB_REF_NAME' Changes Downstream"
+  sync-back-staging:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Production Branch
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Check Diff Between Branches
+      id: check_diff
+      run: |
+        echo "::set-output name=diff::$(git diff --name-only ${{ github.ref }} origin/${{ env.STAGING_BRANCH }} | wc -l)"
+    - name: Create The Pull Request
+      if: ${{ steps.check_diff.outputs.diff > 0 }}
+      uses: repo-sync/pull-request@v2
+      with:
+        destination_branch: ${{ env.STAGING_BRANCH }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        pr_body: "⚠️ This Pull Request is automatically generated. Please check for any accidental code changes before merging."
+        pr_title: "Syncing '$GITHUB_REF_NAME' Changes Downstream"
