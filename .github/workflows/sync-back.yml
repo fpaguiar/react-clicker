@@ -43,7 +43,6 @@ jobs:
       run: |
         echo $GITHUB_REF_NAME
         echo ${{ env }}
-        echo ${{ GITHUB_ENV }}
         echo ${{ env.GITHUB_ENV }}
     - name: Create The Pull Request
       if: ${{ steps.check_diff.outputs.diff > 0 }}
