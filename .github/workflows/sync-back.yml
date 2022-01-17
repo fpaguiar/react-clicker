@@ -18,7 +18,7 @@ jobs:
     - name: Check Diff Between Branches
       id: check_diff
       run: |
-        echo "::set-output name=diff::$(git diff --name-only ${{ github.ref }} $DEVELOP_BRANCH | wc -l)"
+        echo "::set-output name=diff::$(git diff --name-only ${{ github.ref }} origin/${{ env.DEVELOP_BRANCH }} | wc -l)"
     - name: Create The Pull Request
       if: ${{ steps.check_diff.outputs.diff > 0 }}
       uses: repo-sync/pull-request@v2
