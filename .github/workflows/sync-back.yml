@@ -6,6 +6,9 @@ on:
 
 jobs:
   pull-request:
+    env:
+      DEVELOP_BRANCH: origin/develop
+      STAGING_BRANCH: origin/staging
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Production Branch
@@ -15,12 +18,16 @@ jobs:
     - name: Check Diff Between Branches
       id: check_diff
       run: |
-        echo ""::set-output name=diff::$(git diff --name-only ${{ github.ref }} origin/develop | wc -l)
+        echo ""::set-output name=diff::$(git diff --name-only ${{ github.ref }} $DEVELOP_BRANCH | wc -l)
+    - name: Print Environment Variables
+      run: |
+        echo "GITHUB_REF=$GITHUB_REF"
+        echo "GITHUB_REF_NAME=$GITHUB_REF_NAME"
     - name: Create The Pull Request
       if: ${{ steps.check_diff.outputs.diff > 0 }}
       uses: repo-sync/pull-request@v2
       with:
-        destination_branch: "develop"
+        destination_branch: ${{ env.DEVELOP_BRANCH }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        pr_body: "This Pull Request is automatically generated. Please check if there are any accidental code reverts before merging."
+        pr_body: "This Pull Request is automatically generated. Please check for any accidental code changes before merging."
         pr_title: "Syncing ${{ github.ref }} back to other environments"
