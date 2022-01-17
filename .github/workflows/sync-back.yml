@@ -14,5 +14,6 @@ jobs:
       uses: repo-sync/pull-request@v2
       with:
         destination_branch: "develop"
-        pr_title: "Syncing ${{ github.ref }} back to other environments"
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        pr_body: "This Pull Request is automatically generated. Please check if there are any accidental code reverts before merging."
+        pr_title: "Syncing ${{ github.ref }} back to other environments"
