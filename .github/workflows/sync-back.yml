@@ -27,7 +27,7 @@ jobs:
         destination_branch: ${{ env.DEVELOP_BRANCH }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
         pr_body: "This Pull Request is automatically generated. Please check for any accidental code changes before merging."
-        pr_title: "Syncing '${{ env.GITHUB_REF_NAME }}' Changes Downstream"
+        pr_title: "Syncing '$GITHUB_REF_NAME' Changes Downstream"
   sync-back-staging:
     runs-on: ubuntu-latest
     steps:
@@ -39,11 +39,6 @@ jobs:
       id: check_diff
       run: |
         echo "::set-output name=diff::$(git diff --name-only ${{ github.ref }} origin/${{ env.STAGING_BRANCH }} | wc -l)"
-    - name: Print Stuff
-      run: |
-        echo $GITHUB_REF_NAME
-        echo ${{ env }}
-        echo ${{ env.GITHUB_ENV }}
     - name: Create The Pull Request
       if: ${{ steps.check_diff.outputs.diff > 0 }}
       uses: repo-sync/pull-request@v2
@@ -51,4 +46,4 @@ jobs:
         destination_branch: ${{ env.STAGING_BRANCH }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
         pr_body: "This Pull Request is automatically generated. Please check for any accidental code changes before merging."
-        pr_title: "Syncing '${{ env.GITHUB_REF_NAME }}' Changes Downstream"
+        pr_title: "Syncing '$GITHUB_REF_NAME' Changes Downstream"
