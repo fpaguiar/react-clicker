@@ -8,9 +8,14 @@ jobs:
   pull-request:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Master
+    - name: Checkout Production Branch
       uses: actions/checkout@v2
+    - name: Check Diff Between Branches
+      id: check_diff
+      run: |
+        echo ""::set-output name=diff::$(git diff --name-only ${{ github.ref }}..develop | wc -l)
     - name: Create The Pull Request
+      if: ${{ steps.check_diff.outputs.diff > 0 }}
       uses: repo-sync/pull-request@v2
       with:
         destination_branch: "develop"
