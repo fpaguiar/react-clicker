@@ -1,6 +1,6 @@
 {
   "name": "react-clicker",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Simple project that renders a clicker at the screen. For training purposes.",
   "main": "index.html",
   "scripts": {
